@@ -104,7 +104,8 @@ Keep output deterministic (no timestamps) so tests can compare it exactly.
 Keep the book as a library so tests and the CLI both link against it, and the parser stays separate from the matching logic.
 
 ```
-orderbook/
+v1/
+  README.md          // this spec
   CMakeLists.txt
   include/orderbook/
     types.hpp        // Side, Order, Trade, aliases
@@ -120,8 +121,9 @@ orderbook/
 ```
 
 - Pull GoogleTest in with CMake's `FetchContent`.
+- Name the executable `orderbook_v1` and the test target `orderbook_v1_tests`, so they don't clash with later versions.
 - Compile with `-Wall -Wextra -Wpedantic`, and add a debug build with `-fsanitize=address,undefined` to catch memory bugs early.
-- Run with `./orderbook < orders.txt`.
+- Run with `./build/v1/orderbook_v1 < orders.txt`.
 
 ## Test cases
 
@@ -153,8 +155,8 @@ Each step should end with green tests and a commit.
 - [ ] Cancel via `index_`
 - [ ] Market orders
 - [ ] Parser and `main.cpp` reading stdin, with error handling
-- [ ] Generate 1 million random orders and measure orders per second
-- [ ] README with design notes and the benchmark number, pushed to GitHub
+- [ ] Run the shared `benchmarks/orders_1m.txt` input and measure orders per second
+- [ ] Fill in the Results section below, then tag `v1.0` in git
 
 ## Out of scope for v1
 
@@ -167,3 +169,12 @@ These are deliberately left for later versions:
 - Multithreading or lock-free structures
 - Custom allocators and cache-friendly price level arrays
 - Persistence, recovery, auctions, trading halts
+
+## Results
+
+Fill this in when v1 is finished.
+
+- **Benchmark:** TBD orders per second on `benchmarks/orders_1m.txt`.
+- **Design changes:** anything that ended up different from this spec, and why.
+- **What I learned:** the main C++ and market structure lessons from this version.
+- **Next:** what v2 should fix, based on what the benchmark and code showed.
